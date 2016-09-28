@@ -52,9 +52,9 @@ degUnif[meanDeg] <- 1
 ## Fit Uniform network
 ################################
 unif_parms <- seir_params(deg_dist=degUnif)
-est_parms <- c(beta =parms$beta, 
-               eta=parms$eta, 
-               gamma=parms$gamma)
+est_parms <- c(beta =unif_parms$beta, 
+               eta=unif_parms$eta, 
+               gamma=unif_parms$gamma)
 optim_unif <- optim(par = c(beta=0.05, eta=1/2.62, gamma=1/3.38), fn = objFXN, parms=unif_parms, obsDat = obsFlu, mod="ssf")
 
 
@@ -66,9 +66,9 @@ plot_fit(optim_unif$par, parms=unif_parms, data = obsFlu)
 ###############################
 exp_parms <- seir_params(deg_dist=degExp)
 
-est_parms <- c(beta =parms$beta, 
-               eta=parms$eta, 
-               gamma=parms$gamma)
+est_parms <- c(beta =exp_parms$beta, 
+               eta=exp_parms$eta, 
+               gamma=exp_parms$gamma)
 optim_exp <- optim(par = c(beta=0.05, eta=1/2.62, gamma=1/3.38), fn = objFXN, parms=exp_parms, obsDat = obsFlu, mod="ssf")
 
 
