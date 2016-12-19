@@ -43,6 +43,7 @@ sumsqflex <- function(init, parms = seir_params(), obsDat) {
     sumsquares[ii+maxDay+1] <- sum((simDat$incI[matchedTimes] - obsDat$incidence)^2)
     # sumsquares[ii+maxDay+1] <- sum(abs(simDat$incI[matchedTimes] - obsDat$incidence)/obsDat$incidence) ## didn't work well
     # sumsquares[ii+maxDay+1] <- - sum(dpois(x = round(10000*simDat$incI[matchedTimes]) , lambda = round(10000*obsDat$incidence), log=T))
+    
     if(sumsquares[ii+maxDay+1] < minVal) {
       minShift <- ii
       minVal <- sumsquares[ii+maxDay+1]
@@ -54,6 +55,10 @@ sumsqflex <- function(init, parms = seir_params(), obsDat) {
 
 
 objFXN <- function(est_parms, obsDat, parms=seir_params(), mod) {
+  if(any(est_parms < 0)) {
+    # print("here")
+    return(1000000)
+  }
   parms <- subs_parms(est_parms, parms)
   # init <- with(as.list(parms), c(theta=1, thetaDot= -beta*phiI0, I=phiI0, R=phiR0, cumI=phiI0))
   init <- with(as.list(parms), c(theta=1, phiI=phiI0, I=phiI0, R=phiR0, cumI=phiI0))
